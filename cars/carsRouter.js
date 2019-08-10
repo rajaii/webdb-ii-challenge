@@ -35,6 +35,28 @@ router.post('/', async (req, res) => {
     }
 })
 
+router.put('/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        console.log('going in')
+        const updatedCar = await db('cars').where({id}).update(req.body);
+        res.status(200).json(updatedCar);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
+})
+
+router.delete('/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const carDeletedConfirmation = await db('cars').where({id}).del();
+        res.status(200).json(carDeletedConfirmation);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
 
 module.exports = router;
 
